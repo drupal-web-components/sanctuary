@@ -1,0 +1,17 @@
+{
+    "name": "create-sanctuary",
+    "version": "0.1.0",
+    "description": "",
+    "main": "./bin/create-sanctuary.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "create-sanctuary": "node ."
+    },
+    "bin": {
+      "create-sanctuary": "./bin/create-sanctuary.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+  }
+  
