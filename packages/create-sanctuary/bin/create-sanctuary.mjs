@@ -8,14 +8,14 @@ import child_process from 'child_process';
 
 console.log(chalk.bgBlue(boxen('An enjoyable project scaffolder for decoupled Drupal explorers. Powered by Astro.', {title: 'Welcome to Drupal Sanctuary!', titleAlignment: 'center', padding: 1, borderStyle: 'arrow'})));
 
-console.log("\nFirst, we'll shuttle you over to the create-astro cli to create your initial project...");
+console.log(chalk.blue("\nFirst, we'll shuttle you over to the create-astro cli to create your initial project..."));
 
 // TODO - Check for specified project directory, exit if it doesn't exist.
 
 // TODO - Ensure we sanitize input
 child_process.spawnSync("npm create astro@latest drupal-sanctuary", { encoding : 'utf8', stdio: 'inherit', shell: true });
 
-console.log("\nNext, we'll guide you through optionally selecting Astro integrations to add functionality to your project...\n");
+console.log(chalk.blue("\nNext, we'll guide you through optionally selecting Astro integrations to add functionality to your project...\n"));
 
 console.log(boxen('Integrations are optional, and can be added later with `astro add`', {title: 'Protip!', titleAlignment: 'center', padding: 1 }) + '\n');
 
@@ -34,7 +34,18 @@ console.log(boxen('Integrations are optional, and can be added later with `astro
         hint: '- Space to select. Return to submit'
     });
   
-    console.log(response);
+    // TODO - Make project directory path configurable
+    if (response.frameworks.length) {
+        child_process.spawnSync(`cd drupal-sanctuary && npx astro add ${response.frameworks.join(' ')} -y`, { encoding : 'utf8', stdio: 'inherit', shell: true });
+    }
   })();
 
-  // TODO - run Astro add here, ideally non-interactively.
+/**
+ * Next:
+ * Other integrations
+ * SSR options
+ * Drupal data fetching
+ * Prompt for envars
+ * Other Drupal related integrations
+ * Drupal module configurations
+ */
