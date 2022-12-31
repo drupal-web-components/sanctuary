@@ -1,5 +1,5 @@
 {
-  "name": "create-sanctuary",
+  "name": "@gdwc/create-sanctuary",
   "version": "0.1.0",
   "description": "",
   "main": "./bin/create-sanctuary.mjs",

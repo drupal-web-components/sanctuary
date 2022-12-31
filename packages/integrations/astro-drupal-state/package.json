@@ -1,0 +1,19 @@
+{
+  "name": "@gdwc/astro-drupal-state",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "astro": "^1.8.0",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.3"
+  }
+}
