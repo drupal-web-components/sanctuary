@@ -18,10 +18,22 @@ const args = yargs(hideBin(process.argv))
     type: 'array',
     description: 'Specify framework integrations to add to your project.'
   })
+  .option('template', {
+    alias: 't',
+    type: 'string',
+    description: 'Specify the astro template name (basics, blog, minimal)'
+  })
+  .option('typescript', {
+    alias: 'ts',
+    type: 'string',
+    description: 'Specify the tsconfig to use (base, strict, strictest)'
+  })
   .parse()
 
 let directory = args['_'].slice(0,1).shift();
-const frameworks = args?.f;
+const template = args?.template;
+const typescript = args?.typescript;
+const frameworks = args?.frameworks;
 
 // Let us introduce ourselves.
 console.log(chalk.blue(boxen('An enjoyable project scaffolder for decoupled Drupal explorers. Powered by Astro.', {title: 'Welcome to Drupal Sanctuary!', titleAlignment: 'center', padding: 1, margin: 1, borderStyle: 'round'})));
@@ -31,6 +43,8 @@ const plop = await nodePlop(`plopfile.mjs`);
 const astro = plop.getGenerator('astro');
 const integrations = plop.getGenerator('integrations');
 
+// Todo - pass template and typescript args if provided. Appears that 
+// https://github.com/withastro/astro/issues/5897 will need to be meged before this can be tested.
 // Create an Astro project in the specified directory
 if (directory) {
   checkDir(directory);
