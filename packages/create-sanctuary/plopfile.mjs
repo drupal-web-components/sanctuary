@@ -49,10 +49,13 @@ export default function (plop) {
             name: 'frameworks',
             message: 'Optionally, select one or more frameworks',
             choices: [
-                { name: 'React', value: 'react' },
-                { name: 'Vue', value: 'vue' },
-                { name: 'Svelte', value: 'svelte'},
+                { name: 'Alpine.js', value: 'alpinejs' },
                 { name: 'Lit', value: 'lit'},
+                { name: 'Preact', value: 'preact' },
+                { name: 'React', value: 'react' },
+                { name: 'SolidJS', value: 'solid' },
+                { name: 'Svelte', value: 'svelte'},
+                { name: 'Vue', value: 'vue' },
             ],
         }],
         actions: [{
