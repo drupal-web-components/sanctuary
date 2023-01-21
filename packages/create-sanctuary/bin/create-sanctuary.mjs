@@ -13,9 +13,15 @@ const args = yargs(hideBin(process.argv))
   .positional('directory', {
     describe: 'directory where your project will be created'
   })
+  .option('frameworks', {
+    alias: 'f',
+    type: 'array',
+    description: 'Specify framework integrations to add to your project.'
+  })
   .parse()
 
 let directory = args['_'].slice(0,1).shift();
+const frameworks = args?.f;
 
 // Let us introduce ourselves.
 console.log(chalk.blue(boxen('An enjoyable project scaffolder for decoupled Drupal explorers. Powered by Astro.', {title: 'Welcome to Drupal Sanctuary!', titleAlignment: 'center', padding: 1, margin: 1, borderStyle: 'round'})));
@@ -40,10 +46,14 @@ else {
 console.log(chalk.blue("\nNext, we'll guide you through optionally selecting Astro integrations to add functionality to your project..."));
 console.log(chalk.blue(boxen('Integrations are optional, and can be added later with `astro add`', {title: 'Protip!', titleAlignment: 'center', padding: 1, margin: 1, borderStyle: 'round' })));
 
-
-await integrations.runPrompts().then(async function (results) {
-  await integrations.runActions({directory: directory, frameworks: results.frameworks});
-});
+if (frameworks) {
+  await integrations.runActions({directory: directory, frameworks: frameworks});
+}
+else {
+  await integrations.runPrompts().then(async function (results) {
+    await integrations.runActions({directory: directory, frameworks: results.frameworks});
+  });
+}
 
 console.log(chalk.blue("\nWelcome to space. Enjoy your new project!\n"));
 
