@@ -3,12 +3,17 @@ lockfileVersion: 5.4
 importers:
 
   .:
-    specifiers: {}
+    specifiers:
+      '@gdwc/astro-drupal-state': workspace:^0.0.0
+    devDependencies:
+      '@gdwc/astro-drupal-state': link:packages/integrations/astro-drupal-state
 
   examples/astro-drupal-state:
     specifiers:
+      '@gdwc/astro-drupal-state': workspace:^0.0.0
       astro: ^1.9.0
     dependencies:
+      '@gdwc/astro-drupal-state': link:../../packages/integrations/astro-drupal-state
       astro: 1.9.2
 
   packages/create-sanctuary:

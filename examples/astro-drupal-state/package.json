@@ -11,6 +11,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@gdwc/astro-drupal-state": "workspace:^0.0.0",
     "astro": "^1.9.0"
   }
 }

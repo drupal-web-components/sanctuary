@@ -8,5 +8,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@gdwc/astro-drupal-state": "workspace:^0.0.0"
+  }
 }
