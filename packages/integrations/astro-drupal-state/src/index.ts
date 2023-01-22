@@ -4,12 +4,9 @@ export default function (): AstroIntegration {
 	return {
 		name: '@gdwc/astro-drupal-state',
 		hooks: {
-			'astro:config:setup': ({injectRoute}) => {
+			'astro:config:setup': ({injectScript}) => {
 				console.log('Drupal state config setup'); 
-        injectRoute({
-          pattern: '/examples/test',
-          entryPoint: 'examples-test.astro'
-        });
+				injectScript('page', `import { DrupalState } from '@gdwc/drupal-state';`);
 			},
 		},
 	};
