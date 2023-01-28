@@ -2,3 +2,6 @@
 node_modules
 dist
 build
+
+# Local testing
+packages/create-sanctuary/drupal-sanctuary/

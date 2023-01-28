@@ -10,7 +10,10 @@ export default function (plop) {
                 checkDir(answers.directory);
                 console.log(chalk.blue("\nFirst, we'll shuttle you over to the create-astro cli to create your initial project..."));
                 // TODO - sanitize input
-                child_process.spawnSync(`npm create astro@latest ${answers.directory}`, { encoding : 'utf8', stdio: 'inherit', shell: true });
+                let flags = '-- --template basics';
+                flags = answers.typescript ? `${flags} --typescript ${answers.typescript}` : flags;
+                flags = answers.yes ? `${flags} --yes` : flags;
+                child_process.spawnSync(`npm create astro@latest ${answers.directory} ${flags}`, { encoding : 'utf8', stdio: 'inherit', shell: true });
                 resolve('Project created.');
             } else {
                 reject('Unknown project directory.');
