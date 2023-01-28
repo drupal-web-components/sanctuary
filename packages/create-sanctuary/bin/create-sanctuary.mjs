@@ -58,12 +58,14 @@ else {
 console.log(chalk.blue("\nNext, we'll guide you through optionally selecting Astro integrations to add functionality to your project..."));
 console.log(chalk.blue(boxen('Integrations are optional, and can be added later with `astro add`', {title: 'Protip!', titleAlignment: 'center', padding: 1, margin: 1, borderStyle: 'round' })));
 
-if (frameworks) {
+if (frameworks || yes) {
   await integrations.runActions({directory: directory, frameworks: frameworks});
 }
 else {
   await integrations.runPrompts().then(async function (results) {
-    await integrations.runActions({directory: directory, frameworks: results.frameworks});
+    if (results.frameworks.length) {
+      await integrations.runActions({directory: directory, frameworks: results.frameworks});
+    }
   });
 }
 
@@ -71,7 +73,6 @@ console.log(chalk.blue("\nWelcome to space. Enjoy your new project!\n"));
 
 /**
  * Next:
- * If no frameworks, don't astro add
  * Other integrations
  * SSR options
  * Drupal data fetching
