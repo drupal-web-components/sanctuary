@@ -23,6 +23,11 @@ const args = yargs(hideBin(process.argv))
     type: 'array',
     description: 'Specify framework integrations to add to your project.'
   })
+  .option('other', {
+    alias: 'o',
+    type: 'array',
+    description: 'Specify other official Astro integrations to add to your project.'
+  })
   .option('typescript', {
     alias: 't',
     type: 'string',
@@ -39,6 +44,7 @@ let directory = args['_'].slice(0,1).shift();
 const typescript = args?.typescript;
 const frameworks = args?.frameworks;
 const adapters = args?.adapters;
+const other = args?.other;
 const yes = args?.yes;
 
 // Let us introduce ourselves.
@@ -64,28 +70,15 @@ else {
 console.log(chalk.blue("\nNext, we'll guide you through optionally selecting Astro integrations to add functionality to your project..."));
 console.log(chalk.blue(boxen('Integrations are optional, and can be added later with `astro add`', {title: 'Protip!', titleAlignment: 'center', padding: 1, margin: 1, borderStyle: 'round' })));
 
-if ((frameworks && adapters) || yes) {
-  await integrations.runActions({directory: directory, frameworks: frameworks, adapters: adapters});
+if ((frameworks && adapters && other) || yes) {
+  await integrations.runActions({directory: directory, frameworks: frameworks, adapters: adapters, other: other});
 }
 else {
   await integrations.runPrompts().then(async function (results) {
-    if (results.frameworks.length || results.adapters.length) {
-      await integrations.runActions({directory: directory, frameworks: results.frameworks, adapters: results.adapters});
+    if (results.frameworks.length || results.adapters.length || results.other.length) {
+      await integrations.runActions({directory: directory, frameworks: results.frameworks, adapters: results.adapters, other: results.other});
     }
   });
 }
 
 console.log(chalk.blue("\nWelcome to space. Enjoy your new project!\n"));
-
-/**
- * Next:
- * Other integrations
- * SSR options
- * Drupal data fetching
- * Prompt for envars
- * Other Drupal related integrations
- * Drupal module configurations
- * Bug - breaking out of first prompt doesn't break out of script
- * Re-think naming/github org structure
- * Adapters should probably only allow one to be selected.
- */

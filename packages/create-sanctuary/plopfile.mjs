@@ -23,7 +23,7 @@ export default function (plop) {
 
     plop.setActionType('addIntegrations', function (answers) {
         return new Promise((resolve, reject) => {
-            const integrations = answers.frameworks.concat(answers.adapters);
+            const integrations = answers.frameworks.concat(answers.adapters, answers.other);
             if (integrations) {
                 child_process.spawnSync(`cd ${answers.directory} && npx astro add ${integrations.join(' ')} -y`, { encoding : 'utf8', stdio: 'inherit', shell: true });
                 resolve('Integrations installed.');
@@ -72,6 +72,19 @@ export default function (plop) {
                 { name: 'Deno', value: 'deno' },
                 { name: 'Netlify', value: 'netlify' },
                 { name: 'Vercel', value: 'vercel' },
+            ],
+        },
+        {
+            type: 'checkbox',
+            name: 'other',
+            message: 'Optionally add other official Astro integrations.',
+            choices: [
+                { name: 'Image', value: 'image' },
+                { name: 'MDX', value: 'mdx'},
+                { name: 'Partytown', value: 'partytown' },
+                { name: 'Prefetch', value: 'prefetch' },
+                { name: 'Sitemap', value: 'sitemap' },
+                { name: 'Tailwind', value: 'tailwind' },
             ],
         }],
         actions: [{
