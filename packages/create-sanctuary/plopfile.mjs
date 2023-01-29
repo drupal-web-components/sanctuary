@@ -23,8 +23,9 @@ export default function (plop) {
 
     plop.setActionType('addIntegrations', function (answers) {
         return new Promise((resolve, reject) => {
-            if (answers.frameworks) {
-                child_process.spawnSync(`cd ${answers.directory} && npx astro add ${answers.frameworks.join(' ')} -y`, { encoding : 'utf8', stdio: 'inherit', shell: true });
+            const integrations = answers.frameworks.concat(answers.adapters);
+            if (integrations) {
+                child_process.spawnSync(`cd ${answers.directory} && npx astro add ${integrations.join(' ')} -y`, { encoding : 'utf8', stdio: 'inherit', shell: true });
                 resolve('Integrations installed.');
             } else {
                 reject('Unknown integrations.');
@@ -59,6 +60,18 @@ export default function (plop) {
                 { name: 'SolidJS', value: 'solid' },
                 { name: 'Svelte', value: 'svelte'},
                 { name: 'Vue', value: 'vue' },
+            ],
+        },
+        {
+            type: 'checkbox',
+            name: 'adapters',
+            message: 'Astro creates a static build asset by default. To enable server-sider rendering, optionally select an adapter',
+            choices: [
+                { name: 'Node', value: 'node' },
+                { name: 'Cloudflare', value: 'cloudflare'},
+                { name: 'Deno', value: 'deno' },
+                { name: 'Netlify', value: 'netlify' },
+                { name: 'Vercel', value: 'vercel' },
             ],
         }],
         actions: [{

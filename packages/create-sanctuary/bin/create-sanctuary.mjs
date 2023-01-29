@@ -13,6 +13,11 @@ const args = yargs(hideBin(process.argv))
   .positional('directory', {
     describe: 'directory where your project will be created'
   })
+  .option('adapters', {
+    alias: 'a',
+    type: 'array',
+    description: 'Specify SSR adapters to add to your project.'
+  })
   .option('frameworks', {
     alias: 'f',
     type: 'array',
@@ -33,6 +38,7 @@ const args = yargs(hideBin(process.argv))
 let directory = args['_'].slice(0,1).shift();
 const typescript = args?.typescript;
 const frameworks = args?.frameworks;
+const adapters = args?.adapters;
 const yes = args?.yes;
 
 // Let us introduce ourselves.
@@ -58,13 +64,13 @@ else {
 console.log(chalk.blue("\nNext, we'll guide you through optionally selecting Astro integrations to add functionality to your project..."));
 console.log(chalk.blue(boxen('Integrations are optional, and can be added later with `astro add`', {title: 'Protip!', titleAlignment: 'center', padding: 1, margin: 1, borderStyle: 'round' })));
 
-if (frameworks || yes) {
-  await integrations.runActions({directory: directory, frameworks: frameworks});
+if ((frameworks && adapters) || yes) {
+  await integrations.runActions({directory: directory, frameworks: frameworks, adapters: adapters});
 }
 else {
   await integrations.runPrompts().then(async function (results) {
-    if (results.frameworks.length) {
-      await integrations.runActions({directory: directory, frameworks: results.frameworks});
+    if (results.frameworks.length || results.adapters.length) {
+      await integrations.runActions({directory: directory, frameworks: results.frameworks, adapters: results.adapters});
     }
   });
 }
@@ -81,4 +87,5 @@ console.log(chalk.blue("\nWelcome to space. Enjoy your new project!\n"));
  * Drupal module configurations
  * Bug - breaking out of first prompt doesn't break out of script
  * Re-think naming/github org structure
+ * Adapters should probably only allow one to be selected.
  */
