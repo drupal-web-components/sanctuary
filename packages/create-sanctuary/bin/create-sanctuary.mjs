@@ -54,6 +54,7 @@ console.log(chalk.blue(boxen('An enjoyable project scaffolder for decoupled Drup
 const plop = await nodePlop(`plopfile.mjs`);
 const astro = plop.getGenerator('astro');
 const integrations = plop.getGenerator('integrations');
+const api = plop.getGenerator('api');
 
 // Create an Astro project in the specified directory
 if (directory) {
@@ -80,5 +81,9 @@ else {
     }
   });
 }
+
+await api.runPrompts().then(async function (results) {
+  await api.runActions(results);
+});
 
 console.log(chalk.blue("\nWelcome to space. Enjoy your new project!\n"));

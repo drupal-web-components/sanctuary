@@ -32,7 +32,13 @@ export default function (plop) {
             }
         });
     });
-    
+
+    plop.setActionType('configureApi', function (answers) {
+      return new Promise((resolve, reject) => {
+          console.log(answers);
+      });
+    });
+
     // Astro project generator
     plop.setGenerator('astro', {
         description: 'create an Astro project',
@@ -91,4 +97,19 @@ export default function (plop) {
             type: 'addIntegrations',
         }]
     });
+    plop.setGenerator('api', {
+      description: 'configure approach to sourcing CMS data',
+      prompts: [{
+        type: 'list',
+        name: 'sourcing',
+        message: 'How would you like to source data from Drupal?',
+        choices: [
+            { name: 'JSON:API', value: 'jsonapi' },
+            { name: 'I\'ll configure this later', value: 'none'},
+        ],
+      }],
+      actions: [{
+          type: 'configureApi',
+      }]
+  });
 };
