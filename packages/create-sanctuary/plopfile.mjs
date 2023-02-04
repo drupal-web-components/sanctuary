@@ -48,9 +48,19 @@ export default function (plop) {
             message: 'Where would you like to create your new project?',
             default: 'drupal-sanctuary'
         }],
-        actions: [{
-            type: 'initAstro',
-        }]
+        actions: function (data) {
+            const actions = [];
+            actions.push({
+                type: 'initAstro',
+            });
+            actions.push({
+                type: "modify",
+                path: `${data.directory}/src/pages/index.astro`,
+                pattern: /(<\/main>)/gi,
+                templateFile: "templates/summary.hbs",
+            });
+            return actions;
+        },
     });
     plop.setGenerator('integrations', {
         description: 'add Astro integrations',
